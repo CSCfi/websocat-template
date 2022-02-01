@@ -1,0 +1,74 @@
+apiVersion: template.openshift.io/v1
+kind: Template
+metadata:
+  name: websocat
+  annotations:
+    openshift.io/display-name: WebSocat
+parameters:
+  - description: Name of the database service
+    name: DATABASE_SERVICE
+    displayName: Database service name
+    required: true
+    value: ""
+  - description: Port number of the database
+    name: DATABASE_PORT
+    displayName: Database port
+    required: true
+    value: ""
+message: "WebSocat: Command-line client for WebSockets"
+objects:
+- apiVersion: apps.openshift.io/v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: websocat
+    name: websocat
+  spec:
+    replicas: 1
+    strategy:
+      type: Rolling
+    template:
+      metadata:
+        labels:
+          app: websocat
+      spec:
+        containers:
+        - name: websocat
+          image: docker-registry.default.svc:5000/websocat/websocat-image
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 8080
+            protocol: TCP
+          args:
+          - '-b'
+          - 'ws-l:0.0.0.0:8080'
+          - 'tcp:${DATABASE_SERVICE}:${DATABASE_PORT}'
+        restartPolicy: Always
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: websocat
+    name: websocat
+  spec:
+    ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+    selector:
+      app: websocat
+- apiVersion: route.openshift.io/v1
+  kind: Route
+  metadata:
+    labels:
+      app: websocat
+    name: websocat
+  spec:
+    port:
+      targetPort: 8080
+    to:
+      kind: Service
+      name: websocat
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
