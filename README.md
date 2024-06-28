@@ -10,7 +10,7 @@ See [here](https://docs.csc.fi/cloud/tutorials/connect-database-hpc/) how to dep
 
 ## Building the `websocat` image
 
-This template includes already a pre-built image (hosted in Rahti's docker registry). A Dockerfile is included if you for some reason would need to rebuild the image. As `websocat` is programmed in Rust, the Dockerfile simply uses `cargo` to build the image,
+This template uses a [pre-built container image](https://github.com/vi/websocat/pkgs/container/websocat). A Dockerfile is included if you for some reason would need to rebuild the image yourself. As `websocat` is programmed in Rust, the Dockerfile simply uses `cargo` to build the image,
 
 ```Dockerfile
 FROM rust
