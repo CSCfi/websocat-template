@@ -34,7 +34,7 @@ objects:
       spec:
         containers:
         - name: websocat
-          image: docker-registry.default.svc:5000/websocat/websocat-image
+          image: lvarin/websocat
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 8080
