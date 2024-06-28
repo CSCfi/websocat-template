@@ -6,7 +6,7 @@ Traffic will come to the configured port of the `websocat` client. It will then 
 
 ## Deployment
 
-See [here](https://docs.csc.fi/cloud/rahti/tutorials/connect-database-hpc/) how to deploy this template in Rahti.
+See [here](https://docs.csc.fi/cloud/tutorials/connect-database-hpc/) how to deploy this template in Rahti 2.
 
 ## Building the `websocat` image
 
