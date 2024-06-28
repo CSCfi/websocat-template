@@ -34,7 +34,7 @@ objects:
       spec:
         containers:
         - name: websocat
-          image: lvarin/websocat
+          image: ghcr.io/vi/websocat:v1.13.0
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 8080
